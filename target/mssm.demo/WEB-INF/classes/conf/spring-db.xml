@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop
+         http://www.springframework.org/schema/aop/spring-aop.xsd ">
+
+       <!-- spirngdb配置
+                    properties的属性 ${}
+       -->
+       <context:property-placeholder location="classpath:/properties/db.properties" />
+
+       <!--  扫描service dao层的注解 -->
+       <context:component-scan base-package="com.maliao">
+              <context:exclude-filter type="annotation"
+                                      expression="org.springframework.stereotype.Controller" />
+       </context:component-scan>
+
+       <!--  数据库连接池 -->
+       <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+              <!--  基本属性 url、user、password -->
+              <property name="driverClassName" value="${db.driver}"/>
+              <property name="url" value="${db.url}" />
+              <property name="username" value="${db.username}" />
+              <property name="password" value="${db.password}" />
+              <!-- 配置初始化大小、最小、最大 -->
+              <property name="maxActive" value="${maxPoolSize}" />
+              <property name="initialSize" value="${initialPoolSize}" />
+              <property name="minIdle" value="1" />
+              <!-- 配置获取连接等待超时的时间 -->
+              <property name="maxWait" value="60000" />
+              <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+              <property name="timeBetweenEvictionRunsMillis" value="3000" />
+              <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+              <property name="minEvictableIdleTimeMillis" value="300000" />
+
+              <property name="validationQuery" value="SELECT 'x'"/>
+              <property name="testWhileIdle" value="true"/>
+              <property name="testOnBorrow" value="false"/>
+              <property name="testOnReturn" value="false"/>
+
+              <!-- mysql 不支持 poolPreparedStatements   -->
+              <property name="poolPreparedStatements" value="true" />
+              <property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+
+              <!-- 开启Druid的监控统计功能   -->
+              <property name="filters" value="stat" />
+
+       </bean>
+       <!-- JDBC 配置 -->
+       <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+              <property name="dataSource" ref="dataSource" />
+       </bean>
+
+       <!-- myBatis sqlSessionFactory对象配置 -->
+       <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+              <!-- 注入数据库连接池 -->
+              <property name="dataSource" ref="dataSource"/>
+              <!-- 配置myBatis 全局配置文件 -->
+              <property name="configLocation" value="classpath:conf/mybatis-config.xml"/>
+              <!-- 扫描entity包 使用别名-->
+              <property name="typeAliasesPackage" value="com.maliao.seckill.entity"/>
+              <!-- 扫描sql配置文件 使用别名-->
+              <property name="mapperLocations" value="classpath:mapper/**/*.xml"/>
+       </bean>
+
+       <!--<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">-->
+              <!--<constructor-arg index="0" ref="sqlSessionFactory" />-->
+       <!--</bean>-->
+
+       <!--  配置扫描dao接口包,动态实现dao接口,注入到spring容器中 -->
+       <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+              <!--注入sqlSessionFactory-->
+              <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+              <!--注明需要扫描哪些包 -->
+              <property name="basePackage" value="com.maliao.**.dao" />
+
+       </bean>
+
+       <!-- 配置事务管理器 -->
+       <bean id="transactionManager"
+             class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+              <property name="dataSource">
+                     <ref bean="dataSource" />
+              </property>
+       </bean>
+
+       <!-- 注解方式配置事物 -->
+       <!--<tx:annotation-driven transaction-manager="transactionManager" />-->
+       <aop:config>
+              <!--<aop:pointcut expression="execution(* com.*.service.*..*(..))" id="productServiceMethods" />-->
+              <aop:pointcut expression="execution(* *..service*..*(..))" id="productServiceMethods" />
+              <aop:advisor advice-ref="txAdvice" pointcut-ref="productServiceMethods" />
+       </aop:config>
+       <!-- 拦截器方式配置事物 -->
+       <!--使用事务的注意事项：
+                1：事务方法尽可能纯粹（数据库操作），如果非得包含其它操作就要想办法剥离出来；
+                2：不是所有的方法都需要事务，如只有一条修改操作或只读操作就不需要事务。-->
+       <tx:advice id="txAdvice" transaction-manager="transactionManager">
+              <tx:attributes>
+                     <tx:method name="save*" propagation="REQUIRED" />
+                     <tx:method name="delete*" propagation="REQUIRED" />
+                     <tx:method name="modify*" propagation="REQUIRED" />
+                     <tx:method name="execute*" propagation="REQUIRED" />
+                     <tx:method name="insert*" propagation="REQUIRED" />
+                     <tx:method name="remove*" propagation="REQUIRED" />
+                     <tx:method name="update*" propagation="REQUIRED" />
+                     <tx:method name="find*" propagation="REQUIRED" read-only="true" />
+                     <tx:method name="get*" propagation="REQUIRED" read-only="true" />
+                     <tx:method name="*" />
+              </tx:attributes>
+       </tx:advice>
+
+</beans>

@@ -1,0 +1,14 @@
+
+mybatis中文文档
+http://www.mybatis.org/mybatis-3/zh/index.html
+
+-- mybatis
+在使用Mybatis时,如果dao方法为添加、删除、修改,
+则可以用int类型来做返回类型.返回的是受影响的行数,如果为0则表示执行了sql语句后数据库记录没有受影响.如果为具体数字则表示执行sql以后受影响的记录行数.
+
+
+02.mybatis特点及与其他ORM框架的区别
+1）sql写在xml文件或者注解当中，推荐写在xml文件当中
+2）如何实现DAO接口，
+Mapper自动实现DAO接口
+API编程方式实现DAO接口，推荐使用Mapper
