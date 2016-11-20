@@ -66,7 +66,7 @@
         $(function(){
             //使用EL表达式传入参数
             seckill.deatil.init({
-                seckillId:${seckill.id},
+                seckillId:${seckill.seckillId},
                 startTime:${seckill.startTime.time},//转换成毫秒的时间
                 endTime:${seckill.endTime.time}//转换成毫秒的时间
             })
