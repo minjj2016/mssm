@@ -24,7 +24,7 @@
                 sk.user_phone,
                 sk.create_time,
                 sk.state,
-                sk.seckill_id "sckill.seckill_id",
+                sk.seckill_id "seckill.seckill_id",
                 <!--  告诉mybatis s.name是SuccessKilled 下Seckill 的name属性 -->
                 s.name "seckill.name",
                 s.number "seckill.number",

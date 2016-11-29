@@ -32,6 +32,10 @@ public class SeckillController extends BaseController{
 
     @RequestMapping(value = "/list",method = RequestMethod.GET)
     public String list(Model model){
+        logger.info("哈哈哈哈哈哈");
+        logger.debug("嘿嘿嘿嘿嘿");
+        logger.warn("呵呵呵呵呵呵呵");
+        logger.error("鹅鹅鹅鹅鹅鹅");
         List<Seckill> seckillList = seckillService.getSeckillList();
         model.addAttribute("list",seckillList);
         return "seckill/list";
