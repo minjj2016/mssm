@@ -1,6 +1,6 @@
 package com.maliao.base.dao.impl;
 
-import com.maliao.base.dao.BaseDao;
+import com.maliao.base.dao.IBaseDao;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -13,7 +13,8 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/11/29.
  */
-public class BaseDaoImpl implements BaseDao {
+@Repository
+public class BaseDao implements IBaseDao {
 
     @Resource(name = "sqlSessionTemplate")
     private SqlSessionTemplate sqlSessionTemplate;

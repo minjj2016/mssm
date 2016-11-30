@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="mapper.crudDemo.Users3Mapper" >
+<mapper namespace="Users3Mapper" >
   <resultMap id="BaseResultMap" type="com.maliao.crudDemo.entity.Users3" >
     <!--
       WARNING - @mbggenerated
@@ -72,6 +72,6 @@
     -->
     select id, name, email, tel, account, pwd, head_img, remark
     from users
-    order by age desc,username asc
+    order by id desc
   </select>
 </mapper>

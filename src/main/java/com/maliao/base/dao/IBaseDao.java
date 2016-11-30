@@ -4,7 +4,7 @@ package com.maliao.base.dao;
  *
  * 修改时间：2015、12、11
  */
-public interface BaseDao {
+public interface IBaseDao {
 
     /**
      * 保存对象
