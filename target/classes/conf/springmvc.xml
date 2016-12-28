@@ -47,6 +47,7 @@
        <mvc:resources mapping="/js/**" location="/js/" />
        <mvc:resources mapping="/css/**" location="/css/" />
        <mvc:resources mapping="/libs/**" location="/libs/" />
+       <mvc:resources mapping="/static/**" location="/static/" />
 
 
        <!-- 静态资源处理， css， js， imgs -->

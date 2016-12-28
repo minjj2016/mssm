@@ -31,7 +31,13 @@
     <div class="navbar-container" id="navbar-container">
         <!-- #section:basics/sidebar.mobile.toggle -->
         <button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar">
+            <span class="sr-only">切换侧栏</span>
 
+            <span class="icon-bar"></span>
+
+            <span class="icon-bar"></span>
+
+            <span class="icon-bar"></span>
         </button>
 
         <!-- /section:basics/sidebar.mobile.toggle -->

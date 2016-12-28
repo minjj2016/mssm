@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="email=no" name="format-detection">
+    <script src="/js/jquery-1.11.3.min.js"></script>
+    <link href="/static/mui/css/mui.min.css" rel="stylesheet">
+    <script src="/static/mui/js/mui.min.js"></script>
+</head>
+<!-- 主页面标题 -->
+<header class="mui-bar mui-bar-nav">
+    <a class="mui-icon mui-action-menu mui-icon-bars mui-pull-left"></a>
+    <h1 class="mui-title">test</h1>
+</header>
+<style>
+    p{color:white}
+    .qw{color:red}
+    .qa{color:blue}
+</style>
+
+
+<script>
+$(function () {
+    var height = window.screen.width * 0.75 / 2;
+    $(".img").find("div").each(function () {
+        $(this).css("height",height);
+    })
+    var in_pos_top = -(window.screen.width * 0.25 / 2 + height);
+   /* $("#in_middle").css("top",in_pos_top)
+    $("#in_middle").css("height",window.screen.width*0.25)*/
+    $(".btn1").click(function(){
+        $("p").toggle("qa");
+    });
+})
+
+</script>
+<body>
+<!-- 侧滑导航根容器 -->
+<div class="mui-off-canvas-wrap mui-draggable">
+    <!-- 主页面容器 -->
+    <div class="mui-inner-wrap">
+        <!-- 菜单容器 -->
+        <aside class="mui-off-canvas-left">
+            <div class="mui-scroll-wrapper">
+                <div class="mui-scroll">
+                    <!-- 菜单具体展示内容 -->
+                    ...
+                </div>
+            </div>
+        </aside>
+
+        <!-- 主页面内容容器 -->
+        <div class="img" style="width:75%;margin: 0 auto;margin-top: 100px">
+            <div style="float:left;width:50%;background:url(img/main_left_top.png) no-repeat;background-size:cover;">
+                <p>在线值机</p>
+            </div>
+            <div style="float:left;width:50%;background:url(img/main_right_top.png) no-repeat;background-size:cover;"></div>
+        </div>
+        <div  class="img" style="width:75%;margin: 0 auto;">
+            <div style="float:left;width:50%;background:url(img/main_left_down.png) no-repeat;background-size:cover;"></div>
+            <div style="float:left;width:50%;background:url(img/main_right_down.png) no-repeat;background-size:cover;"></div>
+        </div>
+        <div style="clear: both"></div>
+        <div id="in_middle" style="position:relative; left: 37.5%;width: 25%;height:25%;background:url(img/main_in_middle.png) no-repeat;background-size:cover;"></div>
+        <!--<div id="in_middle" style="position:relative; left: 37.5%;"><img width="25%" src="img/main_in_middle.png"></div>-->
+    </div>
+
+    <p class="qw">This is a paragraph.</p>
+    <button class="btn1">Toggle</button>
+
+</div>
+
+</body>
+</html>
